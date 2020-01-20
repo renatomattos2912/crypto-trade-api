@@ -1,0 +1,28 @@
+service: crypto-binance-api
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-east-1
+  stage: prod
+  environment: ${file(env.yml)}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - "secretsmanager:*"
+
+functions:
+  # API V1
+  ## Trade
+  V1APITrade:
+    handler: src/app/v1/trade/index.js
+    events:
+      - http:
+          path: /api/v1/trade
+          method: post
+          cors: true
+          private: false
