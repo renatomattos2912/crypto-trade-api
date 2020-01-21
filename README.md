@@ -26,7 +26,7 @@ POST {HOST}/api/v1/trade?token={Your API Key}
   "action": "buy",
   "p1": "ETH",
   "p2": "BTC",
-  "amount": 0.15
+  "amount": "0.15"
 }
 ```
 

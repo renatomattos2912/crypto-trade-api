@@ -34,7 +34,7 @@ module.exports = {
             if (a === null) reject(new Error('error'))
 
             binanceService
-              .doTradeTest({
+              .doTrade({
                 action: a.action,
                 p1: a.p1,
                 p2: a.p2,
@@ -59,7 +59,7 @@ module.exports = {
       response = successResponse({ status: 200, message: res })
       return response
     } catch (err) {
-      logger.error(err.response.data)
+      logger.error(err)
       response = errorResponse(err)
       throw err
     } finally {

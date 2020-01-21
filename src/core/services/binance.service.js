@@ -35,7 +35,7 @@ module.exports = {
 
     return axios.get(url, { headers })
   },
-  doTradeTest: async ({ action, p1, p2, amount, test = true }) => {
+  doTrade: async ({ action, p1, p2, amount, test = true }) => {
     const secrets = await secretsManager.get()
     const BINANCE_API_KEY = secrets.BINANCE_API_KEY
     const BINANCE_API_SECRET = secrets.BINANCE_API_SECRET
