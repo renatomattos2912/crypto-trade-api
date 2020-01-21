@@ -19,7 +19,7 @@ functions:
   # API V1
   ## Trade
   V1APITrade:
-    handler: src/app/v1/trade/index.js
+    handler: src/app/v1/trade/index.trade
     events:
       - http:
           path: /api/v1/trade
