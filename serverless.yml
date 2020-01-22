@@ -26,3 +26,11 @@ functions:
           method: post
           cors: true
           private: false
+  V1APIGetBalance:
+    handler: src/app/v1/trade/index.getBalance
+    events:
+      - http:
+          path: /api/v1/balance
+          method: get
+          cors: true
+          private: false

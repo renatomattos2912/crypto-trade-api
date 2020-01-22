@@ -9,8 +9,32 @@ const authService = require('../../../core/services/auth.service')
 const utils = require('../../../core/lib/utils')
 
 module.exports = {
+  getBalance: async event => {
+    const LOG_LABEL = 'app/v1/trade.getBalance'
+
+    logger.info({ label: LOG_LABEL, message: 'STARTED' })
+
+    const isAuthenticated = await authService.authenticate(event)
+    if (!isAuthenticated) return notAuthorized()
+
+    let response = null
+
+    try {
+      const res = await binanceService.getAccountInfo()
+      logger.info({ label: LOG_LABEL, message: res })
+
+      response = successResponse({ status: 200, message: res.data.balances })
+      return response
+    } catch (err) {
+      logger.error(err)
+      response = errorResponse(err)
+      throw err
+    } finally {
+      logger.info({ label: LOG_LABEL, message: 'ENDED' })
+    }
+  },
   trade: async event => {
-    const LOG_LABEL = 'app/v1/wallet.trade'
+    const LOG_LABEL = 'app/v1/trade.trade'
 
     logger.info({ label: LOG_LABEL, message: 'STARTED' })
 
