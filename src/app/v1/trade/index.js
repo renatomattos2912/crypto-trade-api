@@ -20,10 +20,26 @@ module.exports = {
     let response = null
 
     try {
-      const res = await binanceService.getAccountInfo()
+      const exchange = utils.getQueryParam({
+        params: event.queryStringParameters,
+        name: 'exchange'
+      })
+
+      let res = null
+
+      switch (exchange) {
+        case 'binance':
+          res = await binanceService.getAccountInfo()
+          break
+
+        default:
+          res = { alert: 'Please inform an exchange (url?exchange={exchange})' }
+          break
+      }
+
       logger.info({ label: LOG_LABEL, message: res })
 
-      response = successResponse({ status: 200, message: res.data.balances })
+      response = successResponse({ status: 200, message: res })
       return response
     } catch (err) {
       logger.error(err)

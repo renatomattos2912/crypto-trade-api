@@ -47,7 +47,15 @@ module.exports = {
   getAccountInfo: async () => {
     const signed = await _getBinanceCallSigned()
     const url = `${API_BASE}/v3/account${signed.data}`
-    return axios.get(url, { headers: signed.headers })
+    const res = await axios.get(url, { headers: signed.headers })
+    const balances = res.data.balances
+    const obj = {}
+    balances.map(item => {
+      if (Number(item.free) > 0) {
+        obj[item.asset] = Number(item.free)
+      }
+    })
+    return { binance: obj }
   },
   doTrade: async ({ action, p1, p2, amount, test = true }) => {
     const data = {
